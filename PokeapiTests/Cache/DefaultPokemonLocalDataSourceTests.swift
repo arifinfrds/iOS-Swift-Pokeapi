@@ -8,44 +8,6 @@
 import XCTest
 @testable import Pokeapi
 
-final class DefaultPokemonLocalDataSource: PokemonLocalDataSource {
-    
-    private let cacheClient: CacheClient
-    
-    init(cacheClient: CacheClient) {
-        self.cacheClient = cacheClient
-    }
-    
-    enum CacheKey: String {
-        case cachePokemonList = "cache_pokemon_list"
-    }
-    
-    func savePokemons(_ pokemons: [Pokemon], completion: (Result<Void, Error>) -> Void) {
-        do {
-            let data = try JSONSerialization.data(withJSONObject: pokemons, options: .prettyPrinted)
-            cacheClient.save(data, forKey: CacheKey.cachePokemonList.rawValue)
-            completion(.success(()))
-        } catch {
-            completion(.failure(error))
-        }
-    }
-    
-    func loadPokemons(forKey key: String, completion: (Result<[Pokemon], Error>) -> Void) {
-        guard let data = cacheClient.load(key: key) else {
-            completion(.success([]))
-            return
-        }
-        do {
-            let decoder = JSONDecoder()
-            let decoded = try decoder.decode([Pokemon].self, from: data)
-            completion(.success(decoded))
-        } catch {
-            completion(.failure(error))
-        }
-    }
-    
-}
-
 class DefaultPokemonLocalDataSourceTests: XCTestCase {
     
     func test_savePokemons_saveGivenPokemons() {
