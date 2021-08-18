@@ -33,13 +33,14 @@ final class PokemonsPresenter: PokemonsPresenterInput {
         useCase.execute { [weak self] result in
             guard let self = self else { return }
             
+            self.view.display(false)
+            
             switch result {
             case let .success(loadPokemonsResponse):
                 self.view.display(loadPokemonsResponse.results ?? [])
             case let .failure(error):
                 self.view.display(error.localizedDescription)
             }
-            self.view.display(false)
         }
     }
 }
@@ -51,7 +52,7 @@ class PokemonsPresenterTests: XCTestCase {
         
         sut.viewLoaded()
         
-        XCTAssertEqual(viewSpy.messages, [ .displayLoading(isLading: true), .displayPokemons, .displayLoading(isLading: false) ])
+        XCTAssertEqual(viewSpy.messages, [ .displayLoading(isLading: true), .displayLoading(isLading: false), .displayPokemons ])
     }
     
     // MARK: - Helpers
