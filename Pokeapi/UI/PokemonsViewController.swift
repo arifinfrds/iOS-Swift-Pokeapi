@@ -87,7 +87,8 @@ extension PokemonsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
-        cell.backgroundColor = .red
+        let pokemon = pokemons[indexPath.row]
+        cell.textLabel?.text = pokemon.name
         return cell
     }
     
