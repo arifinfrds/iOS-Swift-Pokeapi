@@ -11,9 +11,7 @@ import XCTest
 class DefaultPokemonRemoteDataSourceAPIEndToEndTests: XCTestCase {
     
     func test_loadPokemons_deliversLoadPokemonsResponse() {
-        let session = URLSession(configuration: .ephemeral)
-        let httpClient = URLSessionHTTPClient(session: session)
-        let sut = DefaultPokemonRemoteDataSource(httpClient: httpClient)
+       let sut = makeSUT()
         
         let exp = expectation(description: "Wait for network connection")
         var receivedLoadPokemonResponse: LoadPokemonResponse?
@@ -29,6 +27,15 @@ class DefaultPokemonRemoteDataSourceAPIEndToEndTests: XCTestCase {
         wait(for: [exp], timeout: 5.0)
         
         XCTAssertNotNil(receivedLoadPokemonResponse)
+    }
+    
+    // MARK: - Helpers
+    
+    func makeSUT() -> DefaultPokemonRemoteDataSource {
+        let session = URLSession(configuration: .ephemeral)
+        let httpClient = URLSessionHTTPClient(session: session)
+        let sut = DefaultPokemonRemoteDataSource(httpClient: httpClient)
+        return sut
     }
 
 }
