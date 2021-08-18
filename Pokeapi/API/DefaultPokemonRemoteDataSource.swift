@@ -7,36 +7,6 @@
 
 import Foundation
 
-protocol HTTPClient {
-    func get(from url: URL, completion: @escaping (Result<Data, Error>) -> Void)
-}
-
-final class URLSessionHTTPClient: HTTPClient {
-    
-    private let session: URLSession
-    
-    init(session: URLSession) {
-        self.session = session
-    }
-    
-    func get(from url: URL, completion: @escaping (Result<Data, Error>) -> Void) {
-        session.dataTask(with: url) { data, urlResponse, error in
-            if let error = error {
-                completion(.failure(error))
-                return
-            }
-            
-            if let _ = urlResponse as? HTTPURLResponse, let receivedData = data {
-                completion(.success(receivedData))
-            } else {
-                let error = NSError(domain: "\(type(of: DefaultPokemonRemoteDataSource.self))", code: 1, userInfo: [:])
-                completion(.failure(error))
-            }
-        }
-        .resume()
-    }
-}
-
 final class DefaultPokemonRemoteDataSource: PokemonRemoteDataSource {
     
     private let httpClient: HTTPClient
