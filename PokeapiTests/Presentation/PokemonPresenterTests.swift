@@ -1,5 +1,5 @@
 //
-//  PokemonsViewModelTests.swift
+//  PokemonsPresenterTests.swift
 //  PokeapiTests
 //
 //  Created by Arifin Firdaus on 18/08/21.
