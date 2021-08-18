@@ -74,12 +74,3 @@ class DefaultLoadPokemonsUseCaseTests: XCTestCase {
     }
     
 }
-
-extension XCTestCase {
-    
-    func trackForMemoryLeak(on instance: AnyObject, file: StaticString = #filePath, line: UInt = #line) {
-        addTeardownBlock { [weak instance] in
-            XCTAssertNil(instance, "Potential memory leaks.", file: file, line: line)
-        }
-    }
-}
