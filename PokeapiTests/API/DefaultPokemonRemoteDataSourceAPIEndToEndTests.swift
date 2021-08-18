@@ -11,10 +11,10 @@ import XCTest
 class DefaultPokemonRemoteDataSourceAPIEndToEndTests: XCTestCase {
     
     func test_loadPokemons_deliversLoadPokemonsResponse() {
-       let sut = makeSUT()
-        
+        let sut = makeSUT()
         let exp = expectation(description: "Wait for network connection")
         var receivedLoadPokemonResponse: LoadPokemonResponse?
+        
         sut.loadPokemons { result in
             switch result {
             case .success(let loadPokemonResponse):
@@ -31,11 +31,12 @@ class DefaultPokemonRemoteDataSourceAPIEndToEndTests: XCTestCase {
     
     // MARK: - Helpers
     
-    func makeSUT() -> DefaultPokemonRemoteDataSource {
+    func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> DefaultPokemonRemoteDataSource {
         let session = URLSession(configuration: .ephemeral)
         let httpClient = URLSessionHTTPClient(session: session)
         let sut = DefaultPokemonRemoteDataSource(httpClient: httpClient)
+        trackForMemoryLeak(on: sut, file: file,line: line)
         return sut
     }
-
+    
 }
