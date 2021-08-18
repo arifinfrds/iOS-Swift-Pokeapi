@@ -50,8 +50,11 @@ class DefaultLoadPokemonsUseCaseTests: XCTestCase {
     
     // MARK: - Helpers
     
-    private func makeSUT(remoteDataSource: PokemonRemoteDataSource) -> LoadPokemonUseCase {
-        let sut: LoadPokemonUseCase = DefaultLoadPokemonUseCase(pokemonRemoteDataSource: remoteDataSource)
+    private func makeSUT(remoteDataSource: PokemonRemoteDataSource, file: StaticString = #filePath, line: UInt = #line) -> LoadPokemonUseCase {
+        let sut = DefaultLoadPokemonUseCase(pokemonRemoteDataSource: remoteDataSource)
+        addTeardownBlock { [weak sut] in
+            XCTAssertNil(sut, "Potential memory leaks.", file: file, line: line)
+        }
         return sut
     }
     
