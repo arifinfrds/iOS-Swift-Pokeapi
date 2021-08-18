@@ -24,10 +24,14 @@ final class DefaultPokemonLocalDataSource: PokemonLocalDataSource {
         self.cacheClient = cacheClient
     }
     
+    enum CacheKey: String {
+        case cachePokemonList = "cache_pokemon_list"
+    }
+    
     func savePokemons(_ pokemons: [Pokemon], completion: (Result<Void, Error>) -> Void) {
         do {
             let data = try JSONSerialization.data(withJSONObject: pokemons, options: .prettyPrinted)
-            cacheClient.save(data, forKey: "cache_pokemon_list")
+            cacheClient.save(data, forKey: CacheKey.cachePokemonList.rawValue)
             completion(.success(()))
         } catch {
             completion(.failure(error))
@@ -50,7 +54,7 @@ class DefaultPokemonLocalDataSourceTests: XCTestCase {
             }
         }
         
-        XCTAssertEqual(cacheSpy.messages, [ .save(key: "cache_pokemon_list") ])
+        XCTAssertEqual(cacheSpy.messages, [ .save(key: DefaultPokemonLocalDataSource.CacheKey.cachePokemonList.rawValue) ])
     }
     
     // MARK: - Helpers
