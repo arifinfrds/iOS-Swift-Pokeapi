@@ -33,7 +33,7 @@ final class PokemonsViewController: UIViewController {
         
         configureTableView()
         
-        // presenter?.viewLoaded()
+        presenter?.viewLoaded()
     }
     
     private func configureTableView() {
@@ -49,16 +49,22 @@ extension PokemonsViewController: PokemonsView {
     
     func display(_ pokemons: [Pokemon]) {
         self.pokemons = pokemons
-        self.tableView.reloadData()
+        DispatchQueue.main.async { self.tableView.reloadData() }
     }
     
     func display(_ isLoading: Bool) {
         if isLoading {
-            loadingContainerView.isHidden = false
-            activityIndicatorView.startAnimating()
+            DispatchQueue.main.async { [weak self] in
+                self?.loadingContainerView.isHidden = false
+                self?.activityIndicatorView.isHidden = false
+                self?.activityIndicatorView.startAnimating()
+            }
         } else {
-            loadingContainerView.isHidden = true
-            activityIndicatorView.stopAnimating()
+            DispatchQueue.main.async { [weak self] in
+                self?.loadingContainerView.isHidden = true
+                self?.activityIndicatorView.isHidden = true
+                self?.activityIndicatorView.stopAnimating()
+            }
         }
     }
     
@@ -76,11 +82,12 @@ extension PokemonsViewController: PokemonsView {
 extension PokemonsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 15
+        return pokemons.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
+        cell.backgroundColor = .red
         return cell
     }
     
