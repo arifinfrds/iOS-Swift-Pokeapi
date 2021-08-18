@@ -48,18 +48,27 @@ final class PokemonsPresenter: PokemonsPresenterInput {
 class PokemonsPresenterTests: XCTestCase {
     
     func test_viewLoaded_deliversPokemons() {
-        let (sut, viewSpy) = makeSUT()
+        let useCase = LoadPokemonsFromRemoteUseCase(remoteDataSource: MockSuccessPokemonRemoteDataSource())
+        let (sut, viewSpy) = makeSUT(useCase: useCase)
         
         sut.viewLoaded()
         
         XCTAssertEqual(viewSpy.messages, [ .displayLoading(isLading: true), .displayLoading(isLading: false), .displayPokemons ])
     }
     
+    func test_viewLoaded_deliversErrorMessage() {
+        let useCase = LoadPokemonsFromRemoteUseCase(remoteDataSource: MockErrorPokemonRemoteDataSource())
+        let (sut, viewSpy) = makeSUT(useCase: useCase)
+        
+        sut.viewLoaded()
+        
+        XCTAssertEqual(viewSpy.messages, [ .displayLoading(isLading: true), .displayLoading(isLading: false), .displayMessage ])
+    }
+    
     // MARK: - Helpers
     
-    private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> (sut: PokemonsPresenter, viewSpy: PokemonsViewSpy) {
+    private func makeSUT(useCase: LoadPokemonsFromRemoteUseCase, file: StaticString = #filePath, line: UInt = #line) -> (sut: PokemonsPresenter, viewSpy: PokemonsViewSpy) {
         let viewSpy = PokemonsViewSpy()
-        let useCase = LoadPokemonsFromRemoteUseCase(remoteDataSource: MockSuccessPokemonRemoteDataSource())
         let sut = PokemonsPresenter(useCase: useCase, view: viewSpy)
         trackForMemoryLeak(on: sut, file: file, line: line)
         return (sut, viewSpy)
@@ -70,7 +79,7 @@ class PokemonsPresenterTests: XCTestCase {
         enum Message: Equatable {
             case displayPokemons
             case displayLoading(isLading: Bool)
-            case displayMessage(message: String)
+            case displayMessage
         }
         
         private(set) var messages = [Message]()
@@ -84,7 +93,7 @@ class PokemonsPresenterTests: XCTestCase {
         }
         
         func display(_ message: String) {
-            messages.append(.displayMessage(message: message))
+            messages.append(.displayMessage)
         }
     }
     
@@ -93,6 +102,14 @@ class PokemonsPresenterTests: XCTestCase {
         func loadPokemons(completion: @escaping (LoadPokemonsUseCase.Result) -> Void) {
             let response = LoadPokemonResponse(count: 1, next: "sample", results: [])
             completion(.success(response))
+        }
+        
+    }
+    
+    private class MockErrorPokemonRemoteDataSource: PokemonRemoteDataSource {
+        
+        func loadPokemons(completion: @escaping (LoadPokemonsUseCase.Result) -> Void) {
+            completion(.failure(LoadPokemonError.failToLoad))
         }
         
     }
