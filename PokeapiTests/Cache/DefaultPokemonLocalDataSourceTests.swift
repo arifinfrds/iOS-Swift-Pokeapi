@@ -55,9 +55,10 @@ class DefaultPokemonLocalDataSourceTests: XCTestCase {
     
     // MARK: - Helpers
     
-    private func makeSUT() -> (sut: DefaultPokemonLocalDataSource, spy: CacheClientSpy) {
+    private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> (sut: DefaultPokemonLocalDataSource, spy: CacheClientSpy) {
         let cacheSpy = CacheClientSpy()
         let sut = DefaultPokemonLocalDataSource(cacheClient: cacheSpy)
+        trackForMemoryLeak(on: sut, file: file, line: line)
         return (sut, cacheSpy)
     }
     
