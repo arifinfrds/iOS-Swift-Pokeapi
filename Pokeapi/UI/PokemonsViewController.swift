@@ -51,13 +51,13 @@ extension PokemonsViewController: PokemonsView {
         self.title = viewModel.title
     }
     
-    func display(_ pokemons: [Pokemon]) {
-        self.pokemons = pokemons
+    func display(_ viewModel: PokemonsViewModel) {
+        self.pokemons = viewModel.pokemons
         DispatchQueue.main.async { self.tableView.reloadData() }
     }
     
-    func display(_ isLoading: Bool) {
-        if isLoading {
+    func display(_ viewModel: PokemonsLoadingViewModel) {
+        if viewModel.isLoading {
             DispatchQueue.main.async { [weak self] in
                 self?.loadingContainerView.isHidden = false
                 self?.activityIndicatorView.isHidden = false
@@ -72,8 +72,8 @@ extension PokemonsViewController: PokemonsView {
         }
     }
     
-    func display(_ message: String) {
-        let alertController = UIAlertController(title: "Oops..", message: message, preferredStyle: .alert)
+    func display(_ viewModel: PokemonsErrorViewModel) {
+        let alertController = UIAlertController(title: viewModel.title, message: viewModel.message, preferredStyle: .alert)
         let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
         alertController.addAction(okAction)
         present(alertController, animated: true, completion: nil)

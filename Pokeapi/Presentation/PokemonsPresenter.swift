@@ -11,11 +11,24 @@ struct PokemonsNavigationBarViewModel {
     let title: String
 }
 
+struct PokemonsViewModel {
+    let pokemons: [Pokemon]
+}
+
+struct PokemonsLoadingViewModel {
+    let isLoading: Bool
+}
+
+struct PokemonsErrorViewModel {
+    let title: String
+    let message: String
+}
+
 protocol PokemonsView {
     func display(_ viewModel: PokemonsNavigationBarViewModel)
-    func display(_ pokemons: [Pokemon])
-    func display(_ isLoading: Bool)
-    func display(_ message: String)
+    func display(_ viewModel: PokemonsViewModel)
+    func display(_ viewModel: PokemonsLoadingViewModel)
+    func display(_ viewModel: PokemonsErrorViewModel)
 }
 
 protocol PokemonsPresenterInput {
@@ -32,18 +45,18 @@ final class PokemonsPresenter: PokemonsPresenterInput {
     }
     
     func viewLoaded() {
-        view?.display(PokemonsNavigationBarViewModel(title: "Pokemon"))
-        view?.display(true)
+        view?.display(.init(title: "Pokemon"))
+        view?.display(.init(isLoading: true))
         useCase.execute { [weak self] result in
             guard let self = self else { return }
             
-            self.view?.display(false)
+            self.view?.display(.init(isLoading: false))
             
             switch result {
             case let .success(loadPokemonsResponse):
-                self.view?.display(loadPokemonsResponse.results ?? [])
+                self.view?.display(.init(pokemons: loadPokemonsResponse.results ?? []))
             case let .failure(error):
-                self.view?.display(error.localizedDescription)
+                self.view?.display(.init(title: "Oops..", message: error.localizedDescription))
             }
         }
     }
