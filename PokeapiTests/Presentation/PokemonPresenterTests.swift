@@ -16,7 +16,7 @@ class PokemonsPresenterTests: XCTestCase {
         
         sut.viewLoaded()
         
-        XCTAssertEqual(viewSpy.messages, [ .displayLoading(isLading: true), .displayLoading(isLading: false), .displayPokemons ])
+        XCTAssertEqual(viewSpy.messages, [ .displayTitle, .displayLoading(isLading: true), .displayLoading(isLading: false), .displayPokemons ])
     }
     
     func test_viewLoaded_deliversErrorMessage() {
@@ -25,7 +25,7 @@ class PokemonsPresenterTests: XCTestCase {
         
         sut.viewLoaded()
         
-        XCTAssertEqual(viewSpy.messages, [ .displayLoading(isLading: true), .displayLoading(isLading: false), .displayMessage ])
+        XCTAssertEqual(viewSpy.messages, [ .displayTitle, .displayLoading(isLading: true), .displayLoading(isLading: false), .displayMessage ])
     }
     
     // MARK: - Helpers
@@ -41,12 +41,17 @@ class PokemonsPresenterTests: XCTestCase {
     private class PokemonsViewSpy: PokemonsView {
         
         enum Message: Equatable {
+            case displayTitle
             case displayPokemons
             case displayLoading(isLading: Bool)
             case displayMessage
         }
         
         private(set) var messages = [Message]()
+        
+        func display(_ viewModel: PokemonsNavigationBarViewModel) {
+            messages.append(.displayTitle)
+        }
         
         func display(_ pokemons: [Pokemon]) {
             messages.append(.displayPokemons)
