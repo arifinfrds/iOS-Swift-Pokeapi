@@ -13,7 +13,7 @@ protocol LoadPokemonsUseCase {
     func execute(completion: @escaping (Result) -> Void)
 }
 
-final class DefaultLoadPokemonsUseCase: LoadPokemonsUseCase {
+final class LoadPokemonsFromRemoteUseCase: LoadPokemonsUseCase {
     
     private let pokemonRemoteDataSource: PokemonRemoteDataSource
     
@@ -47,7 +47,7 @@ final class LoadPokemonsLocalFirstUseCase: LoadPokemonsUseCase {
         self.remoteUseCase = remoteUseCase
     }
     
-    func execute(completion: @escaping (DefaultLoadPokemonsUseCase.Result) -> Void) {
+    func execute(completion: @escaping (LoadPokemonsFromRemoteUseCase.Result) -> Void) {
         executeLocalUseCase(onCompleted: { [weak self] localResult in
             completion(localResult)
             
@@ -57,7 +57,7 @@ final class LoadPokemonsLocalFirstUseCase: LoadPokemonsUseCase {
         })
     }
     
-    private func executeLocalUseCase(onCompleted: @escaping (DefaultLoadPokemonsUseCase.Result) -> Void) {
+    private func executeLocalUseCase(onCompleted: @escaping (LoadPokemonsFromRemoteUseCase.Result) -> Void) {
         localUseCase.execute { result in
             switch result {
             case .success(let response):
@@ -68,7 +68,7 @@ final class LoadPokemonsLocalFirstUseCase: LoadPokemonsUseCase {
         }
     }
     
-    private func executeRemoteUseCase(onCompleted: @escaping (DefaultLoadPokemonsUseCase.Result) -> Void) {
+    private func executeRemoteUseCase(onCompleted: @escaping (LoadPokemonsFromRemoteUseCase.Result) -> Void) {
         remoteUseCase.execute { result in
             switch result {
             case .success(let response):

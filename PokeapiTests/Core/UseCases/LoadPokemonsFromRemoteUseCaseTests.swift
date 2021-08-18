@@ -1,6 +1,6 @@
 //
-//  DefaultLoadPokemonsUseCaseTests.swift
-//  DefaultLoadPokemonsUseCaseTests
+//  LoadPokemonsFromRemoteUseCaseTests.swift
+//  LoadPokemonsFromRemoteUseCaseTests
 //
 //  Created by Arifin Firdaus on 18/08/21.
 //
@@ -8,17 +8,17 @@
 import XCTest
 @testable import Pokeapi
 
-class DefaultLoadPokemonsUseCaseTests: XCTestCase {
+class LoadPokemonsFromRemoteUseCaseTests: XCTestCase {
     
     func test_execute_deliversErrorOnNetworkFail() {
         let sut = makeSUT(remoteDataSource: MockErrorPokemonRemoteDataSource())
-        var capturedErrors = [DefaultLoadPokemonsUseCase.LoadPokemonError]()
+        var capturedErrors = [LoadPokemonsFromRemoteUseCase.LoadPokemonError]()
         let exp = expectation(description: "Wait for load completion")
         
         sut.execute { result in
             switch result {
             case let .failure(error):
-                capturedErrors.append(error as! DefaultLoadPokemonsUseCase.LoadPokemonError)
+                capturedErrors.append(error as! LoadPokemonsFromRemoteUseCase.LoadPokemonError)
                 exp.fulfill()
             case let .success(loadPokemonResponse):
                 XCTFail("Expect complete with error, got response : \(loadPokemonResponse) instead.")
@@ -51,7 +51,7 @@ class DefaultLoadPokemonsUseCaseTests: XCTestCase {
     // MARK: - Helpers
     
     private func makeSUT(remoteDataSource: PokemonRemoteDataSource, file: StaticString = #filePath, line: UInt = #line) -> LoadPokemonsUseCase {
-        let sut = DefaultLoadPokemonsUseCase(pokemonRemoteDataSource: remoteDataSource)
+        let sut = LoadPokemonsFromRemoteUseCase(pokemonRemoteDataSource: remoteDataSource)
         trackForMemoryLeak(on: sut)
         return sut
     }
@@ -63,7 +63,7 @@ class DefaultLoadPokemonsUseCaseTests: XCTestCase {
     private class MockErrorPokemonRemoteDataSource: PokemonRemoteDataSource {
         
         func loadPokemons(completion: @escaping (LoadPokemonsUseCase.Result) -> Void) {
-            completion(.failure(DefaultLoadPokemonsUseCase.LoadPokemonError.failToLoad))
+            completion(.failure(LoadPokemonsFromRemoteUseCase.LoadPokemonError.failToLoad))
         }
         
     }
