@@ -40,6 +40,7 @@ final class PokemonsViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellId)
+        showTableViewSeparator(false)
     }
 }
 
@@ -62,10 +63,12 @@ extension PokemonsViewController: PokemonsView {
         if viewModel.isLoading {
             DispatchQueue.main.async { [weak self] in
                 self?.showLoadingView()
+                self?.showTableViewSeparator(false)
             }
         } else {
             DispatchQueue.main.async { [weak self] in
                 self?.hideLoadingView()
+                self?.showTableViewSeparator(true)
             }
         }
     }
@@ -118,6 +121,14 @@ extension PokemonsViewController {
         loadingContainerView.isHidden = true
         activityIndicatorView.isHidden = true
         activityIndicatorView.stopAnimating()
+    }
+    
+    func showTableViewSeparator(_ shouldShow: Bool) {
+        if shouldShow {
+            tableView.separatorStyle = .singleLine
+        } else {
+            tableView.separatorStyle = .none
+        }
     }
     
 }
