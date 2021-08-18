@@ -73,7 +73,7 @@ class DefaultPokemonLocalDataSourceTests: XCTestCase {
         XCTAssertEqual(cacheSpy.messages, [ .save(key: DefaultPokemonLocalDataSource.CacheKey.cachePokemonList.rawValue) ])
     }
     
-    func test_loadPokemons_loadPokemons() {
+    func test_loadPokemons_deliversEmptyPokemonsOnEmptyCache() {
         let (sut, cacheSpy) = makeSUT()
         var receivedPokemons = [Pokemon]()
         let key = DefaultPokemonLocalDataSource.CacheKey.cachePokemonList.rawValue
