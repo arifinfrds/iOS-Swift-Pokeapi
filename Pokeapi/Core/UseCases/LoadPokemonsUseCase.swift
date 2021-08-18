@@ -36,3 +36,46 @@ final class DefaultLoadPokemonsUseCase: LoadPokemonsUseCase {
         }
     }
 }
+
+final class LoadPokemonsLocalFirstUseCase: LoadPokemonsUseCase {
+    
+    private let localUseCase: LoadPokemonsUseCase
+    private let remoteUseCase: LoadPokemonsUseCase
+    
+    init(localUseCase: LoadPokemonsUseCase, remoteUseCase: LoadPokemonsUseCase) {
+        self.localUseCase = localUseCase
+        self.remoteUseCase = remoteUseCase
+    }
+    
+    func execute(completion: @escaping (DefaultLoadPokemonsUseCase.Result) -> Void) {
+        executeLocalUseCase(onCompleted: { [weak self] localResult in
+            completion(localResult)
+            
+            self?.executeRemoteUseCase(onCompleted: { remoteResult in
+                completion(remoteResult)
+            })
+        })
+    }
+    
+    private func executeLocalUseCase(onCompleted: @escaping (DefaultLoadPokemonsUseCase.Result) -> Void) {
+        localUseCase.execute { result in
+            switch result {
+            case .success(let response):
+                onCompleted(.success(response))
+            case .failure(let error):
+                onCompleted(.failure(error))
+            }
+        }
+    }
+    
+    private func executeRemoteUseCase(onCompleted: @escaping (DefaultLoadPokemonsUseCase.Result) -> Void) {
+        remoteUseCase.execute { result in
+            switch result {
+            case .success(let response):
+                onCompleted(.success(response))
+            case .failure(let error):
+                onCompleted(.failure(error))
+            }
+        }
+    }
+}
