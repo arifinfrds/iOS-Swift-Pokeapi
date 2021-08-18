@@ -87,9 +87,9 @@
 		928CB84B26CCEB32009425D0 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				928CB85126CCEBCD009425D0 /* Entities */,
 				928CB85226CCEBF1009425D0 /* UseCases */,
 				928CB85526CCEC19009425D0 /* Boundaries */,
-				928CB85126CCEBCD009425D0 /* Entities */,
 			);
 			path = Core;
 			sourceTree = "<group>";
