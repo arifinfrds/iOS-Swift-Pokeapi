@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		924D3E5226CD716E009F05A3 /* DelayedLoadPokemonsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924D3E5126CD716E009F05A3 /* DelayedLoadPokemonsUseCase.swift */; };
 		928CB84D26CCEB48009425D0 /* LoadPokemonResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928CB84C26CCEB48009425D0 /* LoadPokemonResponse.swift */; };
 		928CB84F26CCEB59009425D0 /* Pokemon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928CB84E26CCEB59009425D0 /* Pokemon.swift */; };
 		928CB85426CCEC02009425D0 /* LoadPokemonsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928CB85326CCEC02009425D0 /* LoadPokemonsUseCase.swift */; };
@@ -55,6 +56,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		924D3E5126CD716E009F05A3 /* DelayedLoadPokemonsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelayedLoadPokemonsUseCase.swift; sourceTree = "<group>"; };
 		928CB84C26CCEB48009425D0 /* LoadPokemonResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadPokemonResponse.swift; sourceTree = "<group>"; };
 		928CB84E26CCEB59009425D0 /* Pokemon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pokemon.swift; sourceTree = "<group>"; };
 		928CB85326CCEC02009425D0 /* LoadPokemonsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadPokemonsUseCase.swift; sourceTree = "<group>"; };
@@ -152,6 +154,7 @@
 				928CB87426CD0467009425D0 /* LoadPokemonsLocalFirstUseCase.swift */,
 				928CB87826CD0662009425D0 /* LoadPokemonsFromLocalUseCase.swift */,
 				928CB87C26CD4730009425D0 /* CacheableLoadPokemonsFromRemoteUseCase.swift */,
+				924D3E5126CD716E009F05A3 /* DelayedLoadPokemonsUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -464,6 +467,7 @@
 				928CB88526CD5491009425D0 /* PokemonsPresenter.swift in Sources */,
 				928CB87926CD0662009425D0 /* LoadPokemonsFromLocalUseCase.swift in Sources */,
 				928CB84D26CCEB48009425D0 /* LoadPokemonResponse.swift in Sources */,
+				924D3E5226CD716E009F05A3 /* DelayedLoadPokemonsUseCase.swift in Sources */,
 				92C9467B26CCDCE600F5865E /* PokemonsViewController.swift in Sources */,
 				928CB88B26CD5DEF009425D0 /* PokemonUIComposer.swift in Sources */,
 				928CB85C26CCF18A009425D0 /* HTTPClient.swift in Sources */,

@@ -19,7 +19,7 @@ final class PokemonUIComposer {
                 httpClient: URLSessionHTTPClient(session: URLSession(configuration: .ephemeral))
             )
             
-            let useCase: LoadPokemonsUseCase = CacheableLoadPokemonsFromRemoteUseCase(
+            let loadPokemonUseCase: LoadPokemonsUseCase = CacheableLoadPokemonsFromRemoteUseCase(
                 loadPokemonFromRemoteUseCase: LoadPokemonsLocalFirstUseCase(
                     localUseCase: LoadPokemonsFromLocalUseCase(localDataSource: localDataSource),
                     remoteUseCase: LoadPokemonsFromRemoteUseCase(remoteDataSource: remoteDataSource)
@@ -27,7 +27,7 @@ final class PokemonUIComposer {
                 pokemonCache: localDataSource
             )
             
-            let presenter = PokemonsPresenter(useCase: useCase)
+            let presenter = PokemonsPresenter(useCase: DelayedLoadPokemonsUseCase(useCase: loadPokemonUseCase))
             return presenter
         }
         
