@@ -10,10 +10,12 @@ import XCTest
 
 protocol CacheClient {
     func save(_ data: Data, forKey key: String)
+    func load(key: String) -> Data?
 }
 
 protocol PokemonLocalDataSource {
     func savePokemons(_ pokemons: [Pokemon], completion: (Result<Void, Error>) -> Void)
+    func loadPokemons(forKey key: String, completion: (Result<[Pokemon], Error>) -> Void)
 }
 
 final class DefaultPokemonLocalDataSource: PokemonLocalDataSource {
@@ -38,6 +40,20 @@ final class DefaultPokemonLocalDataSource: PokemonLocalDataSource {
         }
     }
     
+    func loadPokemons(forKey key: String, completion: (Result<[Pokemon], Error>) -> Void) {
+        guard let data = cacheClient.load(key: key) else {
+            completion(.success([]))
+            return
+        }
+        do {
+            let decoder = JSONDecoder()
+            let decoded = try decoder.decode([Pokemon].self, from: data)
+            completion(.success(decoded))
+        } catch {
+            completion(.failure(error))
+        }
+    }
+    
 }
 
 class DefaultPokemonLocalDataSourceTests: XCTestCase {
@@ -57,6 +73,24 @@ class DefaultPokemonLocalDataSourceTests: XCTestCase {
         XCTAssertEqual(cacheSpy.messages, [ .save(key: DefaultPokemonLocalDataSource.CacheKey.cachePokemonList.rawValue) ])
     }
     
+    func test_loadPokemons_loadPokemons() {
+        let (sut, cacheSpy) = makeSUT()
+        var receivedPokemons = [Pokemon]()
+        let key = DefaultPokemonLocalDataSource.CacheKey.cachePokemonList.rawValue
+        
+        sut.loadPokemons(forKey: key) { result in
+            switch result {
+            case .success(let pokemons):
+                receivedPokemons.append(contentsOf: pokemons)
+            case .failure(let error):
+                XCTFail("Expect success, got error: \(error) instead")
+            }
+        }
+        
+        XCTAssertEqual(cacheSpy.messages, [ .load(key: key) ])
+        XCTAssertEqual(receivedPokemons, [])
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> (sut: DefaultPokemonLocalDataSource, spy: CacheClientSpy) {
@@ -70,12 +104,18 @@ class DefaultPokemonLocalDataSourceTests: XCTestCase {
         
         enum Message: Equatable {
             case save(key: String)
+            case load(key: String)
         }
         
         private(set) var messages = [Message]()
         
         func save(_ data: Data, forKey key: String) {
             messages.append(.save(key: key))
+        }
+        
+        func load(key: String) -> Data? {
+            messages.append(.load(key: key))
+            return nil
         }
     }
     
