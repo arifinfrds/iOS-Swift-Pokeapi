@@ -8,11 +8,6 @@
 import XCTest
 @testable import Pokeapi
 
-protocol PokemonLocalDataSource {
-    func savePokemons(_ pokemons: [Pokemon], completion: (Result<Void, Error>) -> Void)
-    func loadPokemons(forKey key: String, completion: (Result<[Pokemon], Error>) -> Void)
-}
-
 final class DefaultPokemonLocalDataSource: PokemonLocalDataSource {
     
     private let cacheClient: CacheClient
