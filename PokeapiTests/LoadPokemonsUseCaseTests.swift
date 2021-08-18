@@ -77,9 +77,7 @@ final class LoadPokemonUseCaseImpl: LoadPokemonUseCase {
 class LoadPokemonsUseCaseTests: XCTestCase {
     
     func test_execute_deliversErrorOnNetworkFail() {
-        let session = URLSession(configuration: .ephemeral)
-        let remoteDataSource = URLSessionPokemonRemoteDataSource(session: session)
-        let sut: LoadPokemonUseCase = LoadPokemonUseCaseImpl(pokemonRemoteDataSource: remoteDataSource)
+        let sut = makeSUT()
         
         sut.execute { result in
             switch result {
@@ -92,6 +90,13 @@ class LoadPokemonsUseCaseTests: XCTestCase {
     }
     
     // MARK: - Helpers
+    
+    private func makeSUT() -> LoadPokemonUseCase {
+        let session = URLSession(configuration: .ephemeral)
+        let remoteDataSource = URLSessionPokemonRemoteDataSource(session: session)
+        let sut: LoadPokemonUseCase = LoadPokemonUseCaseImpl(pokemonRemoteDataSource: remoteDataSource)
+        return sut
+    }
     
     private class MockPokemonRemoteDataSource: PokemonRemoteDataSource {
         
