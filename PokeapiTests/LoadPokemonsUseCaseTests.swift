@@ -70,7 +70,14 @@ final class LoadPokemonUseCaseImpl: LoadPokemonUseCase {
     }
     
     func execute(completion: @escaping (LoadPokemonUseCase.Result) -> Void) {
-        pokemonRemoteDataSource.loadPokemons(completion: completion)
+        pokemonRemoteDataSource.loadPokemons { result in
+            switch result {
+            case let .success(loadPokemonResponse):
+                completion(.success(loadPokemonResponse))
+            case let .failure(Error):
+                completion(.failure(Error))
+            }
+        }
     }
 }
 
@@ -79,21 +86,26 @@ class LoadPokemonsUseCaseTests: XCTestCase {
     func test_execute_deliversErrorOnNetworkFail() {
         let sut = makeSUT()
         
+        var capturedErrors = [MockPokemonRemoteDataSource.LoadPokemonError]()
+        let exp = expectation(description: "Wait for load completion")
         sut.execute { result in
             switch result {
             case let .failure(error):
-                XCTAssertEqual(error as? MockPokemonRemoteDataSource.LoadPokemonError, .networkFail)
+                capturedErrors.append(error as! MockPokemonRemoteDataSource.LoadPokemonError)
+                exp.fulfill()
             case let .success(loadPokemonResponse):
                 XCTFail("Expect complete with error, got response : \(loadPokemonResponse) instead.")
             }
         }
+        wait(for: [exp], timeout: 0.1)
+        
+        XCTAssertEqual(capturedErrors, [ .networkFail ])
     }
     
     // MARK: - Helpers
     
     private func makeSUT() -> LoadPokemonUseCase {
-        let session = URLSession(configuration: .ephemeral)
-        let remoteDataSource = URLSessionPokemonRemoteDataSource(session: session)
+        let remoteDataSource = MockPokemonRemoteDataSource()
         let sut: LoadPokemonUseCase = LoadPokemonUseCaseImpl(pokemonRemoteDataSource: remoteDataSource)
         return sut
     }
