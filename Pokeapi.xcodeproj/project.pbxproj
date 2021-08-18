@@ -80,7 +80,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		928CB84B26CCEB32009425D0 /* Entity */ = {
+		928CB84B26CCEB32009425D0 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				928CB85126CCEBCD009425D0 /* Entity */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		928CB85026CCEB8B009425D0 /* Pokemon API */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Pokemon API";
+			sourceTree = "<group>";
+		};
+		928CB85126CCEBCD009425D0 /* Entity */ = {
 			isa = PBXGroup;
 			children = (
 				928CB84C26CCEB48009425D0 /* LoadPokemonResponse.swift */,
@@ -112,7 +127,8 @@
 		92C9467526CCDCE600F5865E /* Pokeapi */ = {
 			isa = PBXGroup;
 			children = (
-				928CB84B26CCEB32009425D0 /* Entity */,
+				928CB84B26CCEB32009425D0 /* Core */,
+				928CB85026CCEB8B009425D0 /* Pokemon API */,
 				92C9467626CCDCE600F5865E /* AppDelegate.swift */,
 				92C9467826CCDCE600F5865E /* SceneDelegate.swift */,
 				92C9467A26CCDCE600F5865E /* ViewController.swift */,
