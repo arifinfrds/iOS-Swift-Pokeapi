@@ -8,27 +8,6 @@
 import XCTest
 @testable import Pokeapi
 
-final class URLSessionPokemonRemoteDataSource: PokemonRemoteDataSource {
-    
-    private let session: URLSession
-    
-    init(session: URLSession) {
-        self.session = session
-    }
-    
-    func loadPokemons(completion: @escaping (LoadPokemonUseCase.Result) -> Void) {
-        let url = URL(string: "https://pokeapi.co/api/v2/pokemon/")!
-        let urlRequest = URLRequest(url: url)
-        session.dataTask(with: urlRequest) { data, URLResponse, error in
-            if let error = error {
-                completion(.failure(error))
-                return
-            }
-        }
-        .resume()
-    }
-}
-
 class DefaultLoadPokemonsUseCaseTests: XCTestCase {
     
     func test_execute_deliversErrorOnNetworkFail() {
