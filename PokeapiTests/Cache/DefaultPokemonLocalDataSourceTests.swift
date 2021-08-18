@@ -39,8 +39,7 @@ final class DefaultPokemonLocalDataSource: PokemonLocalDataSource {
 class DefaultPokemonLocalDataSourceTests: XCTestCase {
     
     func test_savePokemons_saveGivenPokemons() {
-        let cacheSpy = CacheClientSpy()
-        let sut = DefaultPokemonLocalDataSource(cacheClient: cacheSpy)
+        let (sut, cacheSpy) = makeSUT()
         
         sut.savePokemons([]) { result in
             switch result {
@@ -55,6 +54,12 @@ class DefaultPokemonLocalDataSourceTests: XCTestCase {
     }
     
     // MARK: - Helpers
+    
+    private func makeSUT() -> (sut: DefaultPokemonLocalDataSource, spy: CacheClientSpy) {
+        let cacheSpy = CacheClientSpy()
+        let sut = DefaultPokemonLocalDataSource(cacheClient: cacheSpy)
+        return (sut, cacheSpy)
+    }
     
     private class CacheClientSpy: CacheClient {
         
