@@ -15,10 +15,6 @@ final class LoadPokemonsFromRemoteUseCase: LoadPokemonsUseCase {
         self.remoteDataSource = remoteDataSource
     }
     
-    enum LoadPokemonError: Swift.Error {
-        case failToLoad
-    }
-    
     func execute(completion: @escaping (LoadPokemonsUseCase.Result) -> Void) {
         remoteDataSource.loadPokemons { result in
             switch result {

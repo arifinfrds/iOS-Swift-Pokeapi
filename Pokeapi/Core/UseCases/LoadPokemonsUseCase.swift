@@ -7,6 +7,10 @@
 
 import Foundation
 
+enum LoadPokemonError: Swift.Error {
+    case failToLoad
+}
+
 protocol LoadPokemonsUseCase {
     typealias Result = Swift.Result<LoadPokemonResponse, Error>
     

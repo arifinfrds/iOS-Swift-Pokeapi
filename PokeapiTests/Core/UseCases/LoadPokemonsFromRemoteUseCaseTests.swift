@@ -12,13 +12,13 @@ class LoadPokemonsFromRemoteUseCaseTests: XCTestCase {
     
     func test_execute_deliversErrorOnNetworkFail() {
         let sut = makeSUT(remoteDataSource: MockErrorPokemonRemoteDataSource())
-        var capturedErrors = [LoadPokemonsFromRemoteUseCase.LoadPokemonError]()
+        var capturedErrors = [LoadPokemonError]()
         let exp = expectation(description: "Wait for load completion")
         
         sut.execute { result in
             switch result {
             case let .failure(error):
-                capturedErrors.append(error as! LoadPokemonsFromRemoteUseCase.LoadPokemonError)
+                capturedErrors.append(error as! LoadPokemonError)
                 exp.fulfill()
             case let .success(loadPokemonResponse):
                 XCTFail("Expect complete with error, got response : \(loadPokemonResponse) instead.")
@@ -63,7 +63,7 @@ class LoadPokemonsFromRemoteUseCaseTests: XCTestCase {
     private class MockErrorPokemonRemoteDataSource: PokemonRemoteDataSource {
         
         func loadPokemons(completion: @escaping (LoadPokemonsUseCase.Result) -> Void) {
-            completion(.failure(LoadPokemonsFromRemoteUseCase.LoadPokemonError.failToLoad))
+            completion(.failure(LoadPokemonError.failToLoad))
         }
         
     }
