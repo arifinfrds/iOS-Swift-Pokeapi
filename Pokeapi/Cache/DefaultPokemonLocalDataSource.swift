@@ -21,8 +21,9 @@ final class DefaultPokemonLocalDataSource: PokemonLocalDataSource {
     
     func savePokemons(_ pokemons: [Pokemon], completion: (Result<Void, Error>) -> Void) {
         do {
-            let data = try JSONSerialization.data(withJSONObject: pokemons, options: .prettyPrinted)
-            cacheClient.save(data, forKey: CacheKey.cachePokemonList.rawValue)
+            let encoder = JSONEncoder()
+            let encoded = try encoder.encode(pokemons)
+            cacheClient.save(encoded, forKey: CacheKey.cachePokemonList.rawValue)
             completion(.success(()))
         } catch {
             completion(.failure(error))
