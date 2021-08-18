@@ -248,6 +248,7 @@
 		928CB88826CD578B009425D0 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				92C9467A26CCDCE600F5865E /* PokemonsViewController.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -282,7 +283,6 @@
 				928CB88826CD578B009425D0 /* UI */,
 				92C9467626CCDCE600F5865E /* AppDelegate.swift */,
 				92C9467826CCDCE600F5865E /* SceneDelegate.swift */,
-				92C9467A26CCDCE600F5865E /* PokemonsViewController.swift */,
 				92C9467C26CCDCE600F5865E /* Main.storyboard */,
 				92C9467F26CCDCE700F5865E /* Assets.xcassets */,
 				92C9468126CCDCE700F5865E /* LaunchScreen.storyboard */,
