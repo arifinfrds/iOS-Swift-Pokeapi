@@ -61,15 +61,11 @@ extension PokemonsViewController: PokemonsView {
     func display(_ viewModel: PokemonsLoadingViewModel) {
         if viewModel.isLoading {
             DispatchQueue.main.async { [weak self] in
-                self?.loadingContainerView.isHidden = false
-                self?.activityIndicatorView.isHidden = false
-                self?.activityIndicatorView.startAnimating()
+                self?.showLoadingView()
             }
         } else {
             DispatchQueue.main.async { [weak self] in
-                self?.loadingContainerView.isHidden = true
-                self?.activityIndicatorView.isHidden = true
-                self?.activityIndicatorView.stopAnimating()
+                self?.hideLoadingView()
             }
         }
     }
@@ -110,3 +106,18 @@ extension PokemonsViewController: UITableViewDelegate {
     
 }
 
+extension PokemonsViewController {
+    
+    func showLoadingView() {
+        loadingContainerView.isHidden = false
+        activityIndicatorView.isHidden = false
+        activityIndicatorView.startAnimating()
+    }
+    
+    func hideLoadingView() {
+        loadingContainerView.isHidden = true
+        activityIndicatorView.isHidden = true
+        activityIndicatorView.stopAnimating()
+    }
+    
+}
