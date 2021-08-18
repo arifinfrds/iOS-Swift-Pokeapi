@@ -15,10 +15,25 @@ final class PokemonsViewController: UIViewController {
     
     private let cellId = "PokemonCell"
     
+    private var presenter: PokemonsPresenter?
+    
+    private var pokemons = [Pokemon]()
+    
+    init?(coder: NSCoder, presenter: PokemonsPresenter) {
+        super.init(coder: coder)
+        self.presenter = presenter
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         configureTableView()
+        
+        // presenter?.viewLoaded()
     }
     
     private func configureTableView() {
@@ -26,6 +41,34 @@ final class PokemonsViewController: UIViewController {
         tableView.delegate = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellId)
     }
+}
+
+// MARK: - PokemonsView
+
+extension PokemonsViewController: PokemonsView {
+    
+    func display(_ pokemons: [Pokemon]) {
+        self.pokemons = pokemons
+        self.tableView.reloadData()
+    }
+    
+    func display(_ isLoading: Bool) {
+        if isLoading {
+            loadingContainerView.isHidden = false
+            activityIndicatorView.startAnimating()
+        } else {
+            loadingContainerView.isHidden = true
+            activityIndicatorView.stopAnimating()
+        }
+    }
+    
+    func display(_ message: String) {
+        let alertController = UIAlertController(title: "Oops..", message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+        alertController.addAction(okAction)
+        present(alertController, animated: true, completion: nil)
+    }
+    
 }
 
 // MARK: - UITableViewDataSource

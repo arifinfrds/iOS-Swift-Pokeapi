@@ -32,7 +32,8 @@ class PokemonsPresenterTests: XCTestCase {
     
     private func makeSUT(useCase: LoadPokemonsFromRemoteUseCase, file: StaticString = #filePath, line: UInt = #line) -> (sut: PokemonsPresenter, viewSpy: PokemonsViewSpy) {
         let viewSpy = PokemonsViewSpy()
-        let sut = PokemonsPresenter(useCase: useCase, view: viewSpy)
+        let sut = PokemonsPresenter(useCase: useCase)
+        sut.view = viewSpy
         trackForMemoryLeak(on: sut, file: file, line: line)
         return (sut, viewSpy)
     }

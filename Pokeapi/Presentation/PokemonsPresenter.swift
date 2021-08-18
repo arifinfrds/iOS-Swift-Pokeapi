@@ -20,25 +20,24 @@ protocol PokemonsPresenterInput {
 final class PokemonsPresenter: PokemonsPresenterInput {
     
     private let useCase: LoadPokemonsUseCase
-    private let view: PokemonsView
+    var view: PokemonsView?
     
-    init(useCase: LoadPokemonsUseCase, view: PokemonsView) {
+    init(useCase: LoadPokemonsUseCase) {
         self.useCase = useCase
-        self.view = view
     }
     
     func viewLoaded() {
-        view.display(true)
+        view?.display(true)
         useCase.execute { [weak self] result in
             guard let self = self else { return }
             
-            self.view.display(false)
+            self.view?.display(false)
             
             switch result {
             case let .success(loadPokemonsResponse):
-                self.view.display(loadPokemonsResponse.results ?? [])
+                self.view?.display(loadPokemonsResponse.results ?? [])
             case let .failure(error):
-                self.view.display(error.localizedDescription)
+                self.view?.display(error.localizedDescription)
             }
         }
     }
