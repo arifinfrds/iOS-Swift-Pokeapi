@@ -29,6 +29,7 @@ class LoadPokemonsLocalFirstUseCaseTests: XCTestCase {
         
         XCTAssertEqual(collaboratorSpy.messages, [ .execute, .execute ])
         XCTAssertEqual(receivedLoadPokemonResponse?.count, 0)
+        XCTAssertEqual(receivedLoadPokemonResponse?.results, [])
     }
     
     // MARK: - Helpers
