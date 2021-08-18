@@ -24,7 +24,7 @@ class DefaultPokemonRemoteDataSourceAPIEndToEndTests: XCTestCase {
                 XCTFail("Expect to success, got error \(error) instead.")
             }
         }
-        wait(for: [exp], timeout: 5.0)
+        wait(for: [exp], timeout: defaultTimeout())
         
         XCTAssertNotNil(receivedLoadPokemonResponse)
     }
@@ -37,6 +37,10 @@ class DefaultPokemonRemoteDataSourceAPIEndToEndTests: XCTestCase {
         let sut = DefaultPokemonRemoteDataSource(httpClient: httpClient)
         trackForMemoryLeak(on: sut, file: file,line: line)
         return sut
+    }
+    
+    private func defaultTimeout() -> TimeInterval {
+        5.0
     }
     
 }
