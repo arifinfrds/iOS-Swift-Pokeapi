@@ -69,6 +69,10 @@ final class LoadPokemonUseCaseImpl: LoadPokemonUseCase {
         self.pokemonRemoteDataSource = pokemonRemoteDataSource
     }
     
+    enum LoadPokemonError: Swift.Error {
+        case failToLoad
+    }
+    
     func execute(completion: @escaping (LoadPokemonUseCase.Result) -> Void) {
         pokemonRemoteDataSource.loadPokemons { result in
             switch result {
@@ -85,13 +89,13 @@ class LoadPokemonsUseCaseTests: XCTestCase {
     
     func test_execute_deliversErrorOnNetworkFail() {
         let sut = makeSUT()
-        
-        var capturedErrors = [MockPokemonRemoteDataSource.LoadPokemonError]()
+        var capturedErrors = [LoadPokemonUseCaseImpl.LoadPokemonError]()
         let exp = expectation(description: "Wait for load completion")
+        
         sut.execute { result in
             switch result {
             case let .failure(error):
-                capturedErrors.append(error as! MockPokemonRemoteDataSource.LoadPokemonError)
+                capturedErrors.append(error as! LoadPokemonUseCaseImpl.LoadPokemonError)
                 exp.fulfill()
             case let .success(loadPokemonResponse):
                 XCTFail("Expect complete with error, got response : \(loadPokemonResponse) instead.")
@@ -99,7 +103,7 @@ class LoadPokemonsUseCaseTests: XCTestCase {
         }
         wait(for: [exp], timeout: 0.1)
         
-        XCTAssertEqual(capturedErrors, [ .networkFail ])
+        XCTAssertEqual(capturedErrors, [ .failToLoad ])
     }
     
     // MARK: - Helpers
@@ -112,12 +116,8 @@ class LoadPokemonsUseCaseTests: XCTestCase {
     
     private class MockPokemonRemoteDataSource: PokemonRemoteDataSource {
         
-        enum LoadPokemonError: Swift.Error {
-            case networkFail
-        }
-        
         func loadPokemons(completion: @escaping (LoadPokemonUseCase.Result) -> Void) {
-            completion(.failure(LoadPokemonError.networkFail))
+            completion(.failure(LoadPokemonUseCaseImpl.LoadPokemonError.failToLoad))
         }
         
     }
