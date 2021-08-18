@@ -11,3 +11,21 @@ protocol CacheClient {
     func save(_ data: Data, forKey key: String)
     func load(key: String) -> Data?
 }
+
+final class UserDefaultCacheClient: CacheClient {
+    
+    let defaults: UserDefaults
+    
+    init(defaults: UserDefaults) {
+        self.defaults = defaults
+    }
+    
+    func save(_ data: Data, forKey key: String) {
+        defaults.set(data, forKey: key)
+    }
+    
+    func load(key: String) -> Data? {
+        defaults.data(forKey: key)
+    }
+    
+}
