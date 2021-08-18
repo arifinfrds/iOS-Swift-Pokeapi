@@ -1,5 +1,5 @@
 //
-//  LoadPokemonUseCase.swift
+//  LoadPokemonsUseCase.swift
 //  Pokeapi
 //
 //  Created by Arifin Firdaus on 18/08/21.
@@ -7,13 +7,13 @@
 
 import Foundation
 
-protocol LoadPokemonUseCase {
+protocol LoadPokemonsUseCase {
     typealias Result = Swift.Result<LoadPokemonResponse, Error>
     
     func execute(completion: @escaping (Result) -> Void)
 }
 
-final class DefaultLoadPokemonUseCase: LoadPokemonUseCase {
+final class DefaultLoadPokemonUseCase: LoadPokemonsUseCase {
     
     private let pokemonRemoteDataSource: PokemonRemoteDataSource
     
@@ -25,7 +25,7 @@ final class DefaultLoadPokemonUseCase: LoadPokemonUseCase {
         case failToLoad
     }
     
-    func execute(completion: @escaping (LoadPokemonUseCase.Result) -> Void) {
+    func execute(completion: @escaping (LoadPokemonsUseCase.Result) -> Void) {
         pokemonRemoteDataSource.loadPokemons { result in
             switch result {
             case let .success(loadPokemonResponse):

@@ -8,5 +8,5 @@
 import Foundation
 
 protocol PokemonRemoteDataSource {
-    func loadPokemons(completion: @escaping (LoadPokemonUseCase.Result) -> Void)
+    func loadPokemons(completion: @escaping (LoadPokemonsUseCase.Result) -> Void)
 }

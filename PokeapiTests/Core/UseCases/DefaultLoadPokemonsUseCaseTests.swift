@@ -50,7 +50,7 @@ class DefaultLoadPokemonsUseCaseTests: XCTestCase {
     
     // MARK: - Helpers
     
-    private func makeSUT(remoteDataSource: PokemonRemoteDataSource, file: StaticString = #filePath, line: UInt = #line) -> LoadPokemonUseCase {
+    private func makeSUT(remoteDataSource: PokemonRemoteDataSource, file: StaticString = #filePath, line: UInt = #line) -> LoadPokemonsUseCase {
         let sut = DefaultLoadPokemonUseCase(pokemonRemoteDataSource: remoteDataSource)
         trackForMemoryLeak(on: sut)
         return sut
@@ -62,7 +62,7 @@ class DefaultLoadPokemonsUseCaseTests: XCTestCase {
     
     private class MockErrorPokemonRemoteDataSource: PokemonRemoteDataSource {
         
-        func loadPokemons(completion: @escaping (LoadPokemonUseCase.Result) -> Void) {
+        func loadPokemons(completion: @escaping (LoadPokemonsUseCase.Result) -> Void) {
             completion(.failure(DefaultLoadPokemonUseCase.LoadPokemonError.failToLoad))
         }
         
@@ -70,7 +70,7 @@ class DefaultLoadPokemonsUseCaseTests: XCTestCase {
     
     private class MockSuccessPokemonRemoteDataSource: PokemonRemoteDataSource {
         
-        func loadPokemons(completion: @escaping (LoadPokemonUseCase.Result) -> Void) {
+        func loadPokemons(completion: @escaping (LoadPokemonsUseCase.Result) -> Void) {
             let response = LoadPokemonResponse(count: 1, next: "sample", results: [])
             completion(.success(response))
         }

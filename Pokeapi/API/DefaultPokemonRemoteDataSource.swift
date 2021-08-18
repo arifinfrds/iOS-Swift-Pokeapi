@@ -15,7 +15,7 @@ final class DefaultPokemonRemoteDataSource: PokemonRemoteDataSource {
         self.httpClient = httpClient
     }
     
-    func loadPokemons(completion: @escaping (LoadPokemonUseCase.Result) -> Void) {
+    func loadPokemons(completion: @escaping (LoadPokemonsUseCase.Result) -> Void) {
         let url = URL(string: "https://pokeapi.co/api/v2/pokemon/")!
         httpClient.get(from: url) { result in
             switch result {
