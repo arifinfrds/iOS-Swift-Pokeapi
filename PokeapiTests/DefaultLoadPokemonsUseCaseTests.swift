@@ -52,9 +52,7 @@ class DefaultLoadPokemonsUseCaseTests: XCTestCase {
     
     private func makeSUT(remoteDataSource: PokemonRemoteDataSource, file: StaticString = #filePath, line: UInt = #line) -> LoadPokemonUseCase {
         let sut = DefaultLoadPokemonUseCase(pokemonRemoteDataSource: remoteDataSource)
-        addTeardownBlock { [weak sut] in
-            XCTAssertNil(sut, "Potential memory leaks.", file: file, line: line)
-        }
+        trackForMemoryLeak(on: sut)
         return sut
     }
     
@@ -75,4 +73,13 @@ class DefaultLoadPokemonsUseCaseTests: XCTestCase {
         
     }
     
+}
+
+extension XCTestCase {
+    
+    func trackForMemoryLeak(on instance: AnyObject, file: StaticString = #filePath, line: UInt = #line) {
+        addTeardownBlock { [weak instance] in
+            XCTAssertNil(instance, "Potential memory leaks.", file: file, line: line)
+        }
+    }
 }
