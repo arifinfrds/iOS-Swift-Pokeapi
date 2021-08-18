@@ -153,9 +153,16 @@
 		928CB86026CCF2FE009425D0 /* API */ = {
 			isa = PBXGroup;
 			children = (
-				92C9468D26CCDCE700F5865E /* DefaultLoadPokemonsUseCaseTests.swift */,
 			);
 			path = API;
+			sourceTree = "<group>";
+		};
+		928CB86126CCF330009425D0 /* UseCases */ = {
+			isa = PBXGroup;
+			children = (
+				92C9468D26CCDCE700F5865E /* DefaultLoadPokemonsUseCaseTests.swift */,
+			);
+			path = UseCases;
 			sourceTree = "<group>";
 		};
 		92C9466A26CCDCE600F5865E = {
@@ -197,6 +204,7 @@
 		92C9468C26CCDCE700F5865E /* PokeapiTests */ = {
 			isa = PBXGroup;
 			children = (
+				928CB86126CCF330009425D0 /* UseCases */,
 				928CB85D26CCF2AE009425D0 /* Helpers */,
 				928CB86026CCF2FE009425D0 /* API */,
 				92C9468F26CCDCE700F5865E /* Info.plist */,
