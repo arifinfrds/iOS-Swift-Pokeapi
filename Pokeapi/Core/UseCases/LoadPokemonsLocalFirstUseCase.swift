@@ -26,6 +26,9 @@ final class LoadPokemonsLocalFirstUseCase: LoadPokemonsUseCase {
             })
         })
     }
+}
+
+private extension LoadPokemonsLocalFirstUseCase {
     
     private func executeLocalUseCase(onCompleted: @escaping (LoadPokemonsFromRemoteUseCase.Result) -> Void) {
         localUseCase.execute { result in
@@ -48,4 +51,5 @@ final class LoadPokemonsLocalFirstUseCase: LoadPokemonsUseCase {
             }
         }
     }
+    
 }
