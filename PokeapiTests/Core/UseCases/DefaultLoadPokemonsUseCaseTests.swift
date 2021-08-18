@@ -12,13 +12,13 @@ class DefaultLoadPokemonsUseCaseTests: XCTestCase {
     
     func test_execute_deliversErrorOnNetworkFail() {
         let sut = makeSUT(remoteDataSource: MockErrorPokemonRemoteDataSource())
-        var capturedErrors = [DefaultLoadPokemonUseCase.LoadPokemonError]()
+        var capturedErrors = [DefaultLoadPokemonsUseCase.LoadPokemonError]()
         let exp = expectation(description: "Wait for load completion")
         
         sut.execute { result in
             switch result {
             case let .failure(error):
-                capturedErrors.append(error as! DefaultLoadPokemonUseCase.LoadPokemonError)
+                capturedErrors.append(error as! DefaultLoadPokemonsUseCase.LoadPokemonError)
                 exp.fulfill()
             case let .success(loadPokemonResponse):
                 XCTFail("Expect complete with error, got response : \(loadPokemonResponse) instead.")
@@ -51,7 +51,7 @@ class DefaultLoadPokemonsUseCaseTests: XCTestCase {
     // MARK: - Helpers
     
     private func makeSUT(remoteDataSource: PokemonRemoteDataSource, file: StaticString = #filePath, line: UInt = #line) -> LoadPokemonsUseCase {
-        let sut = DefaultLoadPokemonUseCase(pokemonRemoteDataSource: remoteDataSource)
+        let sut = DefaultLoadPokemonsUseCase(pokemonRemoteDataSource: remoteDataSource)
         trackForMemoryLeak(on: sut)
         return sut
     }
@@ -63,7 +63,7 @@ class DefaultLoadPokemonsUseCaseTests: XCTestCase {
     private class MockErrorPokemonRemoteDataSource: PokemonRemoteDataSource {
         
         func loadPokemons(completion: @escaping (LoadPokemonsUseCase.Result) -> Void) {
-            completion(.failure(DefaultLoadPokemonUseCase.LoadPokemonError.failToLoad))
+            completion(.failure(DefaultLoadPokemonsUseCase.LoadPokemonError.failToLoad))
         }
         
     }

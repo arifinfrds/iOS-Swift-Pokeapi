@@ -13,7 +13,7 @@ protocol LoadPokemonsUseCase {
     func execute(completion: @escaping (Result) -> Void)
 }
 
-final class DefaultLoadPokemonUseCase: LoadPokemonsUseCase {
+final class DefaultLoadPokemonsUseCase: LoadPokemonsUseCase {
     
     private let pokemonRemoteDataSource: PokemonRemoteDataSource
     
