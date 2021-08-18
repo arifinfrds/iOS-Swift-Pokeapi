@@ -8,28 +8,6 @@
 import XCTest
 @testable import Pokeapi
 
-struct LoadPokemonResponse: Codable {
-    let count: Int?
-    let next: String?
-    let results: [Pokemon]?
-    
-    enum CodingKeys: String, CodingKey {
-        case count = "count"
-        case next = "next"
-        case results = "results"
-    }
-}
-
-struct Pokemon: Codable {
-    let name: String?
-    let url: String?
-    
-    enum CodingKeys: String, CodingKey {
-        case name = "name"
-        case url = "url"
-    }
-}
-
 protocol PokemonRemoteDataSource {
     func loadPokemons(completion: @escaping (LoadPokemonUseCase.Result) -> Void)
 }
