@@ -24,7 +24,7 @@ class DefaultLoadPokemonsUseCaseTests: XCTestCase {
                 XCTFail("Expect complete with error, got response : \(loadPokemonResponse) instead.")
             }
         }
-        wait(for: [exp], timeout: 0.1)
+        wait(for: [exp], timeout: defaultTimeout())
         
         XCTAssertEqual(capturedErrors, [ .failToLoad ])
     }
@@ -43,7 +43,7 @@ class DefaultLoadPokemonsUseCaseTests: XCTestCase {
                 XCTFail("Expect complete with success, got error : \(error) instead.")
             }
         }
-        wait(for: [exp], timeout: 0.1)
+        wait(for: [exp], timeout: defaultTimeout())
         
         XCTAssertEqual(capturedPokemons, [])
     }
@@ -54,6 +54,10 @@ class DefaultLoadPokemonsUseCaseTests: XCTestCase {
         let sut = DefaultLoadPokemonUseCase(pokemonRemoteDataSource: remoteDataSource)
         trackForMemoryLeak(on: sut)
         return sut
+    }
+    
+    private func defaultTimeout() -> TimeInterval {
+        0.1
     }
     
     private class MockErrorPokemonRemoteDataSource: PokemonRemoteDataSource {
