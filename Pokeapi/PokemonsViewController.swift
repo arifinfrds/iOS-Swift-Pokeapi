@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  PokemonsViewController.swift
 //  Pokeapi
 //
 //  Created by Arifin Firdaus on 18/08/21.
@@ -7,13 +7,10 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+final class PokemonsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
     }
-
-
 }
 
