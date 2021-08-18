@@ -8,10 +8,6 @@
 import XCTest
 @testable import Pokeapi
 
-protocol PokemonRemoteDataSource {
-    func loadPokemons(completion: @escaping (LoadPokemonUseCase.Result) -> Void)
-}
-
 final class URLSessionPokemonRemoteDataSource: PokemonRemoteDataSource {
     
     private let session: URLSession
@@ -30,36 +26,6 @@ final class URLSessionPokemonRemoteDataSource: PokemonRemoteDataSource {
             }
         }
         .resume()
-    }
-}
-
-protocol LoadPokemonUseCase {
-    typealias Result = Swift.Result<LoadPokemonResponse, Error>
-    
-    func execute(completion: @escaping (Result) -> Void)
-}
-
-final class DefaultLoadPokemonUseCase: LoadPokemonUseCase {
-    
-    private let pokemonRemoteDataSource: PokemonRemoteDataSource
-    
-    init(pokemonRemoteDataSource: PokemonRemoteDataSource) {
-        self.pokemonRemoteDataSource = pokemonRemoteDataSource
-    }
-    
-    enum LoadPokemonError: Swift.Error {
-        case failToLoad
-    }
-    
-    func execute(completion: @escaping (LoadPokemonUseCase.Result) -> Void) {
-        pokemonRemoteDataSource.loadPokemons { result in
-            switch result {
-            case let .success(loadPokemonResponse):
-                completion(.success(loadPokemonResponse))
-            case let .failure(Error):
-                completion(.failure(Error))
-            }
-        }
     }
 }
 

@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		928CB84D26CCEB48009425D0 /* LoadPokemonResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928CB84C26CCEB48009425D0 /* LoadPokemonResponse.swift */; };
 		928CB84F26CCEB59009425D0 /* Pokemon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928CB84E26CCEB59009425D0 /* Pokemon.swift */; };
+		928CB85426CCEC02009425D0 /* LoadPokemonUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928CB85326CCEC02009425D0 /* LoadPokemonUseCase.swift */; };
+		928CB85726CCEC30009425D0 /* PokemonRemoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928CB85626CCEC30009425D0 /* PokemonRemoteDataSource.swift */; };
 		92C9467726CCDCE600F5865E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C9467626CCDCE600F5865E /* AppDelegate.swift */; };
 		92C9467926CCDCE600F5865E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C9467826CCDCE600F5865E /* SceneDelegate.swift */; };
 		92C9467B26CCDCE600F5865E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C9467A26CCDCE600F5865E /* ViewController.swift */; };
@@ -39,6 +41,8 @@
 /* Begin PBXFileReference section */
 		928CB84C26CCEB48009425D0 /* LoadPokemonResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadPokemonResponse.swift; sourceTree = "<group>"; };
 		928CB84E26CCEB59009425D0 /* Pokemon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pokemon.swift; sourceTree = "<group>"; };
+		928CB85326CCEC02009425D0 /* LoadPokemonUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadPokemonUseCase.swift; sourceTree = "<group>"; };
+		928CB85626CCEC30009425D0 /* PokemonRemoteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonRemoteDataSource.swift; sourceTree = "<group>"; };
 		92C9467326CCDCE600F5865E /* Pokeapi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pokeapi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		92C9467626CCDCE600F5865E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		92C9467826CCDCE600F5865E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -83,7 +87,9 @@
 		928CB84B26CCEB32009425D0 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				928CB85126CCEBCD009425D0 /* Entity */,
+				928CB85226CCEBF1009425D0 /* UseCases */,
+				928CB85526CCEC19009425D0 /* Boundaries */,
+				928CB85126CCEBCD009425D0 /* Entities */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -95,13 +101,29 @@
 			path = "Pokemon API";
 			sourceTree = "<group>";
 		};
-		928CB85126CCEBCD009425D0 /* Entity */ = {
+		928CB85126CCEBCD009425D0 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
 				928CB84C26CCEB48009425D0 /* LoadPokemonResponse.swift */,
 				928CB84E26CCEB59009425D0 /* Pokemon.swift */,
 			);
-			path = Entity;
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		928CB85226CCEBF1009425D0 /* UseCases */ = {
+			isa = PBXGroup;
+			children = (
+				928CB85326CCEC02009425D0 /* LoadPokemonUseCase.swift */,
+			);
+			path = UseCases;
+			sourceTree = "<group>";
+		};
+		928CB85526CCEC19009425D0 /* Boundaries */ = {
+			isa = PBXGroup;
+			children = (
+				928CB85626CCEC30009425D0 /* PokemonRemoteDataSource.swift */,
+			);
+			path = Boundaries;
 			sourceTree = "<group>";
 		};
 		92C9466A26CCDCE600F5865E = {
@@ -288,9 +310,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				928CB85726CCEC30009425D0 /* PokemonRemoteDataSource.swift in Sources */,
 				928CB84F26CCEB59009425D0 /* Pokemon.swift in Sources */,
 				928CB84D26CCEB48009425D0 /* LoadPokemonResponse.swift in Sources */,
 				92C9467B26CCDCE600F5865E /* ViewController.swift in Sources */,
+				928CB85426CCEC02009425D0 /* LoadPokemonUseCase.swift in Sources */,
 				92C9467726CCDCE600F5865E /* AppDelegate.swift in Sources */,
 				92C9467926CCDCE600F5865E /* SceneDelegate.swift in Sources */,
 			);
