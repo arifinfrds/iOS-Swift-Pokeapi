@@ -27,31 +27,36 @@ class LoadPokemonsLocalFirstUseCaseTests: XCTestCase {
         }
         wait(for: [exp], timeout: defaultTimeout())
         
-        XCTAssertEqual(collaboratorSpy.messages, [ .execute, .execute ])
+        XCTAssertEqual(collaboratorSpy.messages, [ .execute, .execute, .savePokemons ])
         XCTAssertEqual(receivedLoadPokemonResponse?.count, 0)
         XCTAssertEqual(receivedLoadPokemonResponse?.results, [])
     }
     
     // MARK: - Helpers
     
-    private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> (sut: LoadPokemonsUseCase, collaboratorSpy: CollaboratorUseCaseSpy) {
-        let collaboratorUseCaseSpy = CollaboratorUseCaseSpy()
+    private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> (sut: LoadPokemonsUseCase, collaboratorSpy: CollaboratorSpy) {
+        let collaboratorSpy = CollaboratorSpy()
         let sut = LoadPokemonsLocalFirstUseCase(
-            localUseCase: collaboratorUseCaseSpy,
-            remoteUseCase: collaboratorUseCaseSpy
+            localUseCase: collaboratorSpy,
+            remoteUseCase: CacheableLoadPokemonsFromRemoteUseCase(
+                loadPokemonFromRemoteUseCase: collaboratorSpy,
+                pokemonCache: collaboratorSpy
+            )
         )
         trackForMemoryLeak(on: sut)
-        return (sut, collaboratorUseCaseSpy)
+        return (sut, collaboratorSpy)
     }
     
     private func defaultTimeout() -> TimeInterval {
         0.1
     }
     
-    private class CollaboratorUseCaseSpy: LoadPokemonsUseCase {
+    private class CollaboratorSpy: LoadPokemonsUseCase, PokemonLocalDataSource {
         
         enum Message {
             case execute
+            case savePokemons
+            case loadPokemons
         }
         
         private(set) var messages = [Message]()
@@ -60,6 +65,16 @@ class LoadPokemonsLocalFirstUseCaseTests: XCTestCase {
             messages.append(.execute)
             let mockResponse = LoadPokemonResponse(count: 0 , next: nil, results: [])
             completion(.success(mockResponse))
+        }
+        
+        func savePokemons(_ pokemons: [Pokemon], completion: (Result<Void, Error>) -> Void) {
+            messages.append(.savePokemons)
+            completion(.success(()))
+        }
+        
+        func loadPokemons(forKey key: String, completion: (Result<[Pokemon], Error>) -> Void) {
+            messages.append(.loadPokemons)
+            completion(.success([]))
         }
     }
     
