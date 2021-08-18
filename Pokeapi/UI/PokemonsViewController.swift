@@ -47,6 +47,10 @@ final class PokemonsViewController: UIViewController {
 
 extension PokemonsViewController: PokemonsView {
     
+    func display(_ viewModel: PokemonsNavigationBarViewModel) {
+        self.title = viewModel.title
+    }
+    
     func display(_ pokemons: [Pokemon]) {
         self.pokemons = pokemons
         DispatchQueue.main.async { self.tableView.reloadData() }

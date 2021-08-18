@@ -7,7 +7,12 @@
 
 import Foundation
 
+struct PokemonsNavigationBarViewModel {
+    let title: String
+}
+
 protocol PokemonsView {
+    func display(_ viewModel: PokemonsNavigationBarViewModel)
     func display(_ pokemons: [Pokemon])
     func display(_ isLoading: Bool)
     func display(_ message: String)
@@ -27,6 +32,7 @@ final class PokemonsPresenter: PokemonsPresenterInput {
     }
     
     func viewLoaded() {
+        view?.display(PokemonsNavigationBarViewModel(title: "Pokemon"))
         view?.display(true)
         useCase.execute { [weak self] result in
             guard let self = self else { return }
