@@ -96,12 +96,12 @@
 			path = Core;
 			sourceTree = "<group>";
 		};
-		928CB85026CCEB8B009425D0 /* Pokemon API */ = {
+		928CB85026CCEB8B009425D0 /* API */ = {
 			isa = PBXGroup;
 			children = (
 				928CB85826CCEC7B009425D0 /* DefaultPokemonRemoteDataSource.swift */,
 			);
-			path = "Pokemon API";
+			path = API;
 			sourceTree = "<group>";
 		};
 		928CB85126CCEBCD009425D0 /* Entities */ = {
@@ -153,7 +153,7 @@
 			isa = PBXGroup;
 			children = (
 				928CB84B26CCEB32009425D0 /* Core */,
-				928CB85026CCEB8B009425D0 /* Pokemon API */,
+				928CB85026CCEB8B009425D0 /* API */,
 				92C9467626CCDCE600F5865E /* AppDelegate.swift */,
 				92C9467826CCDCE600F5865E /* SceneDelegate.swift */,
 				92C9467A26CCDCE600F5865E /* ViewController.swift */,
