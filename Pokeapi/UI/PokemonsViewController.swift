@@ -53,7 +53,9 @@ extension PokemonsViewController: PokemonsView {
     
     func display(_ viewModel: PokemonsViewModel) {
         self.pokemons = viewModel.pokemons
-        DispatchQueue.main.async { self.tableView.reloadData() }
+        DispatchQueue.main.async { [weak self] in
+            self?.tableView.reloadData()
+        }
     }
     
     func display(_ viewModel: PokemonsLoadingViewModel) {
