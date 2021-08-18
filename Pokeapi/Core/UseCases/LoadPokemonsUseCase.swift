@@ -12,27 +12,3 @@ protocol LoadPokemonsUseCase {
     
     func execute(completion: @escaping (Result) -> Void)
 }
-
-final class LoadPokemonsFromRemoteUseCase: LoadPokemonsUseCase {
-    
-    private let pokemonRemoteDataSource: PokemonRemoteDataSource
-    
-    init(pokemonRemoteDataSource: PokemonRemoteDataSource) {
-        self.pokemonRemoteDataSource = pokemonRemoteDataSource
-    }
-    
-    enum LoadPokemonError: Swift.Error {
-        case failToLoad
-    }
-    
-    func execute(completion: @escaping (LoadPokemonsUseCase.Result) -> Void) {
-        pokemonRemoteDataSource.loadPokemons { result in
-            switch result {
-            case let .success(loadPokemonResponse):
-                completion(.success(loadPokemonResponse))
-            case let .failure(Error):
-                completion(.failure(Error))
-            }
-        }
-    }
-}
