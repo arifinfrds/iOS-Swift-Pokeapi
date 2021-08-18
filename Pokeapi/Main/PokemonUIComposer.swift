@@ -27,7 +27,7 @@ final class PokemonUIComposer {
                 pokemonCache: localDataSource
             )
             
-            let presenter = PokemonsPresenter(useCase: DelayedLoadPokemonsUseCase(useCase: loadPokemonUseCase))
+            let presenter = PokemonsPresenter(useCase: DelayedLoadPokemonsUseCaseDecorator(useCase: loadPokemonUseCase))
             return presenter
         }
         

@@ -1,5 +1,5 @@
 //
-//  DelayedLoadPokemonsUseCase.swift
+//  DelayedLoadPokemonsUseCaseDecorator.swift
 //  Pokeapi
 //
 //  Created by Arifin Firdaus on 18/08/21.
@@ -7,17 +7,17 @@
 
 import Foundation
 
-final class DelayedLoadPokemonsUseCase: LoadPokemonsUseCase {
+final class DelayedLoadPokemonsUseCaseDecorator: LoadPokemonsUseCase {
     
-    private let useCase: LoadPokemonsUseCase
+    private let decoratee: LoadPokemonsUseCase
     
     init(useCase: LoadPokemonsUseCase) {
-        self.useCase = useCase
+        self.decoratee = useCase
     }
     
     func execute(completion: @escaping (LoadPokemonsUseCase.Result) -> Void) {
         DispatchQueue.global().asyncAfter(deadline: .now() + 2) { [weak self] in
-            self?.useCase.execute(completion: completion)
+            self?.decoratee.execute(completion: completion)
         }
     }
 }
