@@ -13,6 +13,8 @@ final class PokemonsViewController: UIViewController {
     @IBOutlet weak private(set) var loadingContainerView: UIView!
     @IBOutlet weak private(set) var activityIndicatorView: UIActivityIndicatorView!
     
+    private let cellId = "PokemonCell"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -22,7 +24,7 @@ final class PokemonsViewController: UIViewController {
     private func configureTableView() {
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellId)
     }
 }
 
@@ -35,7 +37,7 @@ extension PokemonsViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
         return cell
     }
     
