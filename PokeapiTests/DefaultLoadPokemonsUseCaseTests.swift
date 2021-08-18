@@ -1,6 +1,6 @@
 //
-//  LoadPokemonsUseCaseTests.swift
-//  LoadPokemonsUseCaseTests
+//  DefaultLoadPokemonsUseCaseTests.swift
+//  DefaultLoadPokemonsUseCaseTests
 //
 //  Created by Arifin Firdaus on 18/08/21.
 //
@@ -61,7 +61,7 @@ protocol LoadPokemonUseCase {
     func execute(completion: @escaping (Result) -> Void)
 }
 
-final class LoadPokemonUseCaseImpl: LoadPokemonUseCase {
+final class DefaultLoadPokemonUseCase: LoadPokemonUseCase {
     
     private let pokemonRemoteDataSource: PokemonRemoteDataSource
     
@@ -85,17 +85,17 @@ final class LoadPokemonUseCaseImpl: LoadPokemonUseCase {
     }
 }
 
-class LoadPokemonsUseCaseTests: XCTestCase {
+class DefaultLoadPokemonsUseCaseTests: XCTestCase {
     
     func test_execute_deliversErrorOnNetworkFail() {
         let sut = makeSUT()
-        var capturedErrors = [LoadPokemonUseCaseImpl.LoadPokemonError]()
+        var capturedErrors = [DefaultLoadPokemonUseCase.LoadPokemonError]()
         let exp = expectation(description: "Wait for load completion")
         
         sut.execute { result in
             switch result {
             case let .failure(error):
-                capturedErrors.append(error as! LoadPokemonUseCaseImpl.LoadPokemonError)
+                capturedErrors.append(error as! DefaultLoadPokemonUseCase.LoadPokemonError)
                 exp.fulfill()
             case let .success(loadPokemonResponse):
                 XCTFail("Expect complete with error, got response : \(loadPokemonResponse) instead.")
@@ -110,14 +110,14 @@ class LoadPokemonsUseCaseTests: XCTestCase {
     
     private func makeSUT() -> LoadPokemonUseCase {
         let remoteDataSource = MockPokemonRemoteDataSource()
-        let sut: LoadPokemonUseCase = LoadPokemonUseCaseImpl(pokemonRemoteDataSource: remoteDataSource)
+        let sut: LoadPokemonUseCase = DefaultLoadPokemonUseCase(pokemonRemoteDataSource: remoteDataSource)
         return sut
     }
     
     private class MockPokemonRemoteDataSource: PokemonRemoteDataSource {
         
         func loadPokemons(completion: @escaping (LoadPokemonUseCase.Result) -> Void) {
-            completion(.failure(LoadPokemonUseCaseImpl.LoadPokemonError.failToLoad))
+            completion(.failure(DefaultLoadPokemonUseCase.LoadPokemonError.failToLoad))
         }
         
     }
