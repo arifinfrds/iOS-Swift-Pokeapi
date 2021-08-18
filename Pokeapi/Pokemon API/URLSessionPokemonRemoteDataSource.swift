@@ -23,6 +23,21 @@ final class URLSessionPokemonRemoteDataSource: PokemonRemoteDataSource {
                 completion(.failure(error))
                 return
             }
+            
+            if let httpResponse = URLResponse as? HTTPURLResponse, let receivedData = data {
+                if httpResponse.statusCode == 200 {
+                    let decoder = JSONDecoder()
+                    do {
+                        let decoded = try decoder.decode(LoadPokemonResponse.self, from: receivedData)
+                        completion(.success(decoded))
+                    } catch {
+                        completion(.failure(error))
+                    }
+                }
+            } else {
+                let error = NSError(domain: "\(type(of: URLSessionPokemonRemoteDataSource.self))", code: 1, userInfo: [:])
+                completion(.failure(error))
+            }
         }
         .resume()
     }

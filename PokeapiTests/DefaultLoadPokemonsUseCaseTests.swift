@@ -11,7 +11,7 @@ import XCTest
 class DefaultLoadPokemonsUseCaseTests: XCTestCase {
     
     func test_execute_deliversErrorOnNetworkFail() {
-        let sut = makeSUT()
+        let sut = makeSUT(remoteDataSource: MockErrorPokemonRemoteDataSource())
         var capturedErrors = [DefaultLoadPokemonUseCase.LoadPokemonError]()
         let exp = expectation(description: "Wait for load completion")
         
@@ -29,18 +29,45 @@ class DefaultLoadPokemonsUseCaseTests: XCTestCase {
         XCTAssertEqual(capturedErrors, [ .failToLoad ])
     }
     
+    func test_execute_deliversEmptyPokemonList() {
+        let sut = makeSUT(remoteDataSource: MockSuccessPokemonRemoteDataSource())
+        var capturedPokemons = [Pokemon]()
+        let exp = expectation(description: "Wait for load completion")
+        
+        sut.execute { result in
+            switch result {
+            case .success(let loadPokemonResponse):
+                capturedPokemons = loadPokemonResponse.results ?? []
+                exp.fulfill()
+            case .failure(let error):
+                XCTFail("Expect complete with success, got error : \(error) instead.")
+            }
+        }
+        wait(for: [exp], timeout: 0.1)
+        
+        XCTAssertEqual(capturedPokemons, [])
+    }
+    
     // MARK: - Helpers
     
-    private func makeSUT() -> LoadPokemonUseCase {
-        let remoteDataSource = MockPokemonRemoteDataSource()
+    private func makeSUT(remoteDataSource: PokemonRemoteDataSource) -> LoadPokemonUseCase {
         let sut: LoadPokemonUseCase = DefaultLoadPokemonUseCase(pokemonRemoteDataSource: remoteDataSource)
         return sut
     }
     
-    private class MockPokemonRemoteDataSource: PokemonRemoteDataSource {
+    private class MockErrorPokemonRemoteDataSource: PokemonRemoteDataSource {
         
         func loadPokemons(completion: @escaping (LoadPokemonUseCase.Result) -> Void) {
             completion(.failure(DefaultLoadPokemonUseCase.LoadPokemonError.failToLoad))
+        }
+        
+    }
+    
+    private class MockSuccessPokemonRemoteDataSource: PokemonRemoteDataSource {
+        
+        func loadPokemons(completion: @escaping (LoadPokemonUseCase.Result) -> Void) {
+            let response = LoadPokemonResponse(count: 1, next: "sample", results: [])
+            completion(.success(response))
         }
         
     }
