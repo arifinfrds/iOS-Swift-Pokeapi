@@ -11,12 +11,28 @@ import XCTest
 class PokemonsViewControllerTests: XCTestCase {
     
     func test_instantiateViewController_isPokemonsViewController() {
-        let identifier = "PokemonsViewController"
-        let storyboard = UIStoryboard(name: identifier, bundle: .main)
-        
-        let viewController = storyboard.instantiateViewController(identifier: identifier)
+        let viewController = makeSUT()
         
         XCTAssertTrue(viewController is PokemonsViewController)
+    }
+    
+    func test_outlets_isSettable() {
+        let viewController = makeSUT() as! PokemonsViewController
+        
+        viewController.loadViewIfNeeded()
+        
+        XCTAssertNotNil(viewController.tableView)
+        XCTAssertNotNil(viewController.loadingContainerView)
+        XCTAssertNotNil(viewController.activityIndicatorView)
+    }
+    
+    // MARK: Helpers
+    
+    private func makeSUT() -> UIViewController {
+        let identifier = "PokemonsViewController"
+        let storyboard = UIStoryboard(name: identifier, bundle: .main)
+        let viewController = storyboard.instantiateViewController(identifier: identifier)
+        return viewController
     }
     
 }
