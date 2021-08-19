@@ -16,7 +16,7 @@ class PokemonsViewControllerTests: XCTestCase {
         XCTAssertTrue(viewController is PokemonsViewController)
     }
     
-    func test_outlets_isSettable() {
+    func test_outlets_isNotNil() {
         let viewController = makeSUT() as! PokemonsViewController
         
         viewController.loadViewIfNeeded()
