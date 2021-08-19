@@ -28,10 +28,11 @@ class PokemonsViewControllerTests: XCTestCase {
     
     // MARK: Helpers
     
-    private func makeSUT() -> UIViewController {
+    private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> UIViewController {
         let identifier = "PokemonsViewController"
         let storyboard = UIStoryboard(name: identifier, bundle: .main)
         let viewController = storyboard.instantiateViewController(identifier: identifier)
+        trackForMemoryLeak(on: viewController as! PokemonsViewController, file: file, line: line)
         return viewController
     }
     
