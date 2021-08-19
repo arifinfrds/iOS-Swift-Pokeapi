@@ -34,8 +34,8 @@ final class PokemonUIComposer {
         let presenter = createPresenter()
         
         let createView: () -> PokemonsViewController = {
-            let storyboard = UIStoryboard(name: "Main", bundle: .main)
             let identifier = "PokemonsViewController"
+            let storyboard = UIStoryboard(name: identifier, bundle: .main)
             let viewController = storyboard.instantiateViewController(identifier: identifier) { coder in
                 return PokemonsViewController(coder: coder, presenter: presenter)
             }
