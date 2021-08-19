@@ -18,4 +18,4 @@ jobs:
       run: sudo xcode-select -switch /Applications/Xcode_12.3.app
 
     - name: Build and test (unit)
-      run: xcodebuild clean build test -project Pokeapi.xcodeproj -scheme "Pokeapi" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO -sdk iphonesimulator -destination "platform=iOS Simulator,OS=14.5,name=iPhone 12 Pro Max" ONLY_ACTIVE_ARCH=YES
+      run: xcodebuild clean build test -project Pokeapi.xcodeproj -scheme "Pokeapi" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO -sdk iphonesimulator -destination "platform=iOS Simulator,OS=14.1,name=iPhone 12 Pro Max" ONLY_ACTIVE_ARCH=YES
