@@ -53,10 +53,9 @@ class PokemonsPresenterTests: XCTestCase {
             messages.append(.displayTitle)
         }
         
-        func display(_ viewModel: PokemonsViewModel) {
+        func display(_ viewModels: [PokemonCellViewModel]) {
             messages.append(.displayPokemons)
         }
-        
         func display(_ viewModel: PokemonsLoadingViewModel) {
             messages.append(.displayLoading(isLading: viewModel.isLoading))
         }

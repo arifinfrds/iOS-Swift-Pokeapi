@@ -17,7 +17,7 @@ final class PokemonsViewController: UIViewController {
     
     private var presenter: PokemonsPresenter?
     
-    private var pokemons = [Pokemon]()
+    private var cellViewModels = [PokemonCellViewModel]()
     
     init?(coder: NSCoder, presenter: PokemonsPresenter) {
         super.init(coder: coder)
@@ -39,7 +39,6 @@ final class PokemonsViewController: UIViewController {
     private func configureTableView() {
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellId)
         showTableViewSeparator(false)
     }
 }
@@ -52,8 +51,8 @@ extension PokemonsViewController: PokemonsView {
         self.title = viewModel.title
     }
     
-    func display(_ viewModel: PokemonsViewModel) {
-        self.pokemons = viewModel.pokemons
+    func display(_ cellViewModels: [PokemonCellViewModel]) {
+        self.cellViewModels = cellViewModels
         DispatchQueue.main.async { [weak self] in
             self?.tableView.reloadData()
         }
@@ -87,13 +86,14 @@ extension PokemonsViewController: PokemonsView {
 extension PokemonsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return pokemons.count
+        return cellViewModels.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
-        let pokemon = pokemons[indexPath.row]
-        cell.textLabel?.text = pokemon.name
+        let cellViewModel = cellViewModels[indexPath.row]
+        cell.textLabel?.text = cellViewModel.pokemon.name
+        cell.detailTextLabel?.text = cellViewModel.subtitle
         return cell
     }
     

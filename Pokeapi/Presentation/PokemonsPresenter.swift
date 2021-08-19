@@ -11,8 +11,9 @@ struct PokemonsNavigationBarViewModel {
     let title: String
 }
 
-struct PokemonsViewModel {
-    let pokemons: [Pokemon]
+struct PokemonCellViewModel {
+    let pokemon: Pokemon
+    let subtitle: String
 }
 
 struct PokemonsLoadingViewModel {
@@ -26,7 +27,7 @@ struct PokemonsErrorViewModel {
 
 protocol PokemonsView {
     func display(_ viewModel: PokemonsNavigationBarViewModel)
-    func display(_ viewModel: PokemonsViewModel)
+    func display(_ cellViewModels: [PokemonCellViewModel])
     func display(_ viewModel: PokemonsLoadingViewModel)
     func display(_ viewModel: PokemonsErrorViewModel)
 }
@@ -54,7 +55,12 @@ final class PokemonsPresenter: PokemonsPresenterInput {
             
             switch result {
             case let .success(loadPokemonsResponse):
-                self.view?.display(.init(pokemons: loadPokemonsResponse.results ?? []))
+                let pokemons = loadPokemonsResponse.results ?? []
+                let cellViewModels = pokemons.enumerated().map { (index, pokemon) in
+                    PokemonCellViewModel(pokemon: pokemon, subtitle: "#0\(index)")
+                }
+                self.view?.display(cellViewModels)
+            
             case let .failure(error):
                 self.view?.display(.init(title: "Oops..", message: error.localizedDescription))
             }
