@@ -11,13 +11,18 @@ struct SwiftUIPokemonsView: View {
     
     var body: some View {
         
-        List(/*@START_MENU_TOKEN@*/0 ..< 5/*@END_MENU_TOKEN@*/) { item in
-            SwiftUIPokemonCell()
+        NavigationView {
+            
+            List(/*@START_MENU_TOKEN@*/0 ..< 5/*@END_MENU_TOKEN@*/) { item in
+                SwiftUIPokemonCell()
+            }
+            .navigationBarTitle(Text("Pokemons"), displayMode: .large)
         }
     }
 }
 
 struct SwiftUIPokemonsView_Previews: PreviewProvider {
+    
     static var previews: some View {
         SwiftUIPokemonsView()
     }
