@@ -37,6 +37,7 @@
 		92C9468326CCDCE700F5865E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 92C9468126CCDCE700F5865E /* LaunchScreen.storyboard */; };
 		92C9468E26CCDCE700F5865E /* LoadPokemonsFromRemoteUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C9468D26CCDCE700F5865E /* LoadPokemonsFromRemoteUseCaseTests.swift */; };
 		92C9469926CCDCE700F5865E /* PokeapiUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C9469826CCDCE700F5865E /* PokeapiUITests.swift */; };
+		92DBB74526D6265500AAA6AD /* SwiftUIPokemonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DBB74426D6265500AAA6AD /* SwiftUIPokemonsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,6 +94,7 @@
 		92C9469426CCDCE700F5865E /* PokeapiUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PokeapiUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		92C9469826CCDCE700F5865E /* PokeapiUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokeapiUITests.swift; sourceTree = "<group>"; };
 		92C9469A26CCDCE700F5865E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		92DBB74426D6265500AAA6AD /* SwiftUIPokemonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIPokemonsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -264,6 +266,7 @@
 			isa = PBXGroup;
 			children = (
 				92DBB74126D625B900AAA6AD /* UIKit */,
+				92DBB74326D6260B00AAA6AD /* SwiftUI */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -352,6 +355,14 @@
 				924659A326CE035300E24F68 /* PokemonsViewControllerTests.swift */,
 			);
 			path = UIKit;
+			sourceTree = "<group>";
+		};
+		92DBB74326D6260B00AAA6AD /* SwiftUI */ = {
+			isa = PBXGroup;
+			children = (
+				92DBB74426D6265500AAA6AD /* SwiftUIPokemonsView.swift */,
+			);
+			path = SwiftUI;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -502,6 +513,7 @@
 				92C9467726CCDCE600F5865E /* AppDelegate.swift in Sources */,
 				92C9467926CCDCE600F5865E /* SceneDelegate.swift in Sources */,
 				928CB86F26CD0076009425D0 /* CacheClient.swift in Sources */,
+				92DBB74526D6265500AAA6AD /* SwiftUIPokemonsView.swift in Sources */,
 				928CB87726CD0541009425D0 /* LoadPokemonsFromRemoteUseCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
