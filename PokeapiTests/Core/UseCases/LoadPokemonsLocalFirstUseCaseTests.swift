@@ -43,7 +43,7 @@ class LoadPokemonsLocalFirstUseCaseTests: XCTestCase {
                 pokemonCache: collaboratorSpy
             )
         )
-        trackForMemoryLeak(on: sut)
+        trackForMemoryLeak(on: sut, file: file, line: line)
         return (sut, collaboratorSpy)
     }
     

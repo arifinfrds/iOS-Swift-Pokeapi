@@ -18,10 +18,10 @@ final class LoadPokemonsLocalFirstUseCase: LoadPokemonsUseCase {
     }
     
     func execute(completion: @escaping (LoadPokemonsFromRemoteUseCase.Result) -> Void) {
-        executeLocalUseCase(onCompleted: { [weak self] localResult in
+        executeLocalUseCase(onCompleted: { localResult in
             completion(localResult)
             
-            self?.executeRemoteUseCase(onCompleted: { remoteResult in
+            self.executeRemoteUseCase(onCompleted: { remoteResult in
                 completion(remoteResult)
             })
         })
