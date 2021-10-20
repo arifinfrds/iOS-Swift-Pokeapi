@@ -52,7 +52,7 @@ class LoadPokemonsFromRemoteUseCaseTests: XCTestCase {
     
     private func makeSUT(remoteDataSource: PokemonRemoteDataSource, file: StaticString = #filePath, line: UInt = #line) -> LoadPokemonsUseCase {
         let sut = LoadPokemonsFromRemoteUseCase(remoteDataSource: remoteDataSource)
-        trackForMemoryLeak(on: sut)
+        trackForMemoryLeak(on: sut, file: file, line: line)
         return sut
     }
     
