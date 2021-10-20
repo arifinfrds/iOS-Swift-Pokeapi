@@ -63,8 +63,8 @@ class LoadPokemonsLocalFirstUseCaseTests: XCTestCase {
         
         func execute(completion: @escaping (LoadPokemonsFromRemoteUseCase.Result) -> Void) {
             messages.append(.execute)
-            let mockResponse = LoadPokemonResponse(count: 0 , next: nil, results: [])
-            completion(.success(mockResponse))
+            let stubResponse = LoadPokemonResponse(count: 0 , next: nil, results: [])
+            completion(.success(stubResponse))
         }
         
         func savePokemons(_ pokemons: [Pokemon], completion: (Result<Void, Error>) -> Void) {
